@@ -30,19 +30,20 @@ function addSubmission(array, newName, newScore, newDate) {
         name: newName,
         score: newScore,
         date: newDate 
+        passed: newScore >= 60 //shorthand way since all statements evaluate to true/false anyways
     }
-      if (newScore >= 60) {
-        newObject.passed = true;
-    } else {
-       newObject.passed = false; 
-    }
+//       if (newScore >= 60) {
+//         newObject.passed = true;
+//     } else {
+//        newObject.passed = false; 
+//     }
     array.push(newObject);
 }    
     addSubmission(submissions, "Jerry", 50, "2020-10-17");
     console.log(submissions);   
 
 function  deleteSubmissionByIndex(array, index) {
-    array.splice(2,1);
+    array.splice(index, 1);
     
 }
 deleteSubmissionByIndex(submissions,2)
@@ -61,11 +62,12 @@ console.log(submissions);
 function editSubmission(array, index, score) {
   let newScore=array[index];
    newScore.score=score;
-   if (score >= 60) {
-    newScore.passed = true;
-} else {
-   newScore.passed = false;
-}
+    newScore.passed = score >= 60 //shorthand again :) 
+//    if (score >= 60) {
+//     newScore.passed = true;
+// } else {
+//    newScore.passed = false;
+// }
 }
 editSubmission(submissions, 2, 100);
 console.log(submissions);
@@ -92,8 +94,7 @@ findLowestScore(submissions);
 console.log(findLowestScore(submissions));
 
 function findAverageScore (array) {
-    let score = submissions.score;
-        for (const submission of submissions) {
+//you dont need to reference the original array since thats what the parameter is for, it can take any array     
         let sum = 0;
         for(let i =0; i < array.length; i++) {
         sum += array[i].score;
@@ -101,27 +102,21 @@ function findAverageScore (array) {
         let averageScore = sum / array.length;
         return averageScore;
         }
-        }
 findAverageScore(submissions);
 console.log(findAverageScore(submissions));
 
 function filterPassing(array) {
-    let score = submissions.score;
-    const passing=array.filter(function (score){
-    return score.score >= 60;
-})
-return passing;
+    //I was only getting back one item from your code, you can use filter and put all your conditions in there and it will return a whole new array
+  let passing = array.filter((item) => item.passed);
+  return passing;
 }
 
 filterPassing(submissions);
 console.log(filterPassing(submissions));
 
 function filter90AndAbove(array) {
-    let score = submissions.score;
-    const over90=array.filter(function (score) {
-    return score.score >=90;      
-    })
-    return over90;
+   let passing = array.filter((item) => item.score >= 90);
+  return passing;
     }
    filter90AndAbove(submissions);
    console.log(filter90AndAbove(submissions));
